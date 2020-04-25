@@ -7,7 +7,7 @@ from flask import request
 app = Flask(__name__)
 
 stockfish = Stockfish('/usr/games/stockfish')
-stockfish.set_skill_level(5)
+stockfish.set_skill_level(10)
 
 def eval(self):
     self.stockfish.stdin.write(f"eval\n")
@@ -40,3 +40,14 @@ def eval():
         moves = moves[0:(index + 1)]
     stockfish.set_position(moves)
     return { "eval": stockfish.eval() }
+
+
+@app.route('/engine/position', methods=['POST', 'GET'])
+def position():
+    moves = request.args.get('moves', '').split(',')
+    index = request.args.get('index', '')
+    if index:
+        index = int(index)
+        moves = moves[0:(index + 1)]
+    stockfish.set_position(moves)
+    return { "eval": stockfish.eval(), "best_move": stockfish.get_best_move() }
