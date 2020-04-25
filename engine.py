@@ -7,7 +7,7 @@ from flask import request
 app = Flask(__name__)
 
 stockfish = Stockfish('/usr/games/stockfish')
-stockfish.set_skill_level(10)
+stockfish.set_skill_level(5)
 
 def eval(self):
     self.stockfish.stdin.write(f"eval\n")
