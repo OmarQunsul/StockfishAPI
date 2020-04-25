@@ -6,7 +6,8 @@ RUN apt-get -y install python3-pip
 RUN ["pip3", "install", "stockfish"]
 RUN ["pip3", "install", "flask"]
 ADD engine.py /
-#ADD stockfish /usr/games/
+
+EXPOSE 5000
 
 ENV FLASK_APP=engine.py
 CMD ["flask", "run", "--host=0.0.0.0"]
