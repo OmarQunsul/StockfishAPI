@@ -21,14 +21,22 @@ def eval(self):
 
 Stockfish.eval = eval
 
-@app.route('/best_move', methods=['POST', 'GET'])
+@app.route('/engine/best_move', methods=['POST', 'GET'])
 def best_move():
     moves = request.args.get('moves', '').split(',')
+    index = request.args.get('index', '')
+    if index:
+        index = int(index)
+        moves = moves[0:(index + 1)]
     stockfish.set_position(moves)
     return { "best_move": stockfish.get_best_move() }
 
-@app.route('/eval', methods=['POST', 'GET'])
+@app.route('/engine/eval', methods=['POST', 'GET'])
 def eval():
     moves = request.args.get('moves', '').split(',')
+    index = request.args.get('index', '')
+    if index:
+        index = int(index)
+        moves = moves[0:(index + 1)]
     stockfish.set_position(moves)
     return { "eval": stockfish.eval() }
