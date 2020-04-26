@@ -18,34 +18,17 @@ def eval(self):
 
 Stockfish.eval = eval
 
-#@app.route('/engine/best_move', methods=['POST', 'GET'])
-#def best_move():
-#    moves = request.args.get('moves', '').split(',')
-#    index = request.args.get('index', '')
-#    if index:
-#        index = int(index)
-#        moves = moves[0:(index + 1)]
-#    stockfish.set_position(moves)
-#    return { "best_move": stockfish.get_best_move() }
-#
-#@app.route('/engine/eval', methods=['POST', 'GET'])
-#def eval():
-#    moves = request.args.get('moves', '').split(',')
-#    index = request.args.get('index', '')
-#    if index:
-#        index = int(index)
-#        moves = moves[0:(index + 1)]
-#    stockfish.set_position(moves)
-#    return { "eval": stockfish.eval() }
-
 @app.route('/engine/position', methods=['POST', 'GET'])
 def position():
     stockfish = Stockfish('/usr/games/stockfish')
-    stockfish.set_skill_level(10)
+    stockfish.set_skill_level(15)
     moves = request.args.get('moves', '').split(',')
     index = request.args.get('index', '')
     if index:
         index = int(index)
+        index = min(index, len(moves) - 1)
         moves = moves[0:(index + 1)]
+    else:
+        index = len(moves) - 1
     stockfish.set_position(moves)
-    return { "eval": stockfish.eval(), "best_move": stockfish.get_best_move() }
+    return { "eval": stockfish.eval(), "best_move": stockfish.get_best_move(), "index": index }
