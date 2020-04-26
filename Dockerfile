@@ -1,5 +1,5 @@
-#FROM python:3.9.0a5-buster
-FROM debian:sid
+FROM python:3.9.0a5-buster
+#FROM debian:sid
 
 RUN apt-get update --fix-missing -qq
 RUN apt-get -y install stockfish

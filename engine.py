@@ -6,9 +6,6 @@ from flask import request
 
 app = Flask(__name__)
 
-stockfish = Stockfish('/usr/games/stockfish')
-stockfish.set_skill_level(10)
-
 def eval(self):
     self.stockfish.stdin.write(f"eval\n")
     self.stockfish.stdin.flush()
@@ -33,6 +30,8 @@ def best_move():
 
 @app.route('/engine/eval', methods=['POST', 'GET'])
 def eval():
+    stockfish = Stockfish('/usr/games/stockfish')
+    stockfish.set_skill_level(10)
     moves = request.args.get('moves', '').split(',')
     index = request.args.get('index', '')
     if index:
