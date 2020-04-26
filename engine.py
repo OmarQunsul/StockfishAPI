@@ -18,6 +18,9 @@ def eval(self):
 
 Stockfish.eval = eval
 
+stockfish = Stockfish('/usr/games/stockfish')
+stockfish.set_skill_level(10)
+
 @app.route('/engine/best_move', methods=['POST', 'GET'])
 def best_move():
     moves = request.args.get('moves', '').split(',')
@@ -30,8 +33,6 @@ def best_move():
 
 @app.route('/engine/eval', methods=['POST', 'GET'])
 def eval():
-    stockfish = Stockfish('/usr/games/stockfish')
-    stockfish.set_skill_level(10)
     moves = request.args.get('moves', '').split(',')
     index = request.args.get('index', '')
     if index:
