@@ -7,7 +7,7 @@ from flask import jsonify
 
 app = Flask(__name__)
 
-LEVEL = 15
+LEVEL = 18
 
 def eval(self):
     self.stockfish.stdin.write(f"eval\n")
